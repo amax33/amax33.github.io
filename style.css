@@ -279,7 +279,22 @@ a:hover {
         0 0 15px rgba(138, 180, 248, 0.22);
 }
 
+.publication-link {
+    color: #e5eaf1;
+    text-decoration: none;
 
+    transition:
+        color 160ms ease,
+        text-shadow 160ms ease;
+}
+
+.publication-link:hover {
+    color: var(--accent-strong);
+    text-decoration: none;
+
+    text-shadow:
+        0 0 18px rgba(138, 180, 248, 0.16);
+}
 /* =========================================================
    HERO
 ========================================================= */
