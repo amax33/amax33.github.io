@@ -134,6 +134,9 @@ let targetY = window.innerHeight / 2;
 let currentX = targetX;
 let currentY = targetY;
 
+const isTouch = window.matchMedia("(hover: none)").matches;
+let lastTouch = -Infinity;
+
 
 document.addEventListener("mousemove", (event) => {
 
@@ -143,7 +146,37 @@ document.addEventListener("mousemove", (event) => {
 });
 
 
-function updateCursor() {
+/* On phones the light follows the finger */
+
+function setTouchTarget(event) {
+
+    const touch = event.touches[0];
+
+    if (!touch) return;
+
+    targetX = touch.clientX;
+    targetY = touch.clientY;
+    lastTouch = performance.now();
+
+}
+
+document.addEventListener("touchstart", setTouchTarget, { passive: true });
+document.addEventListener("touchmove", setTouchTarget, { passive: true });
+
+
+function updateCursor(now) {
+
+    /* With no finger on screen, the light drifts slowly by itself */
+
+    if (isTouch && now - lastTouch > 2500) {
+
+        const w = window.innerWidth;
+        const h = window.innerHeight;
+
+        targetX = w / 2 + Math.sin(now / 3200) * w * 0.38;
+        targetY = h / 2 + Math.sin(now / 2300 + 1) * h * 0.32;
+
+    }
 
     /*
         Small interpolation creates a smoother,
@@ -153,21 +186,14 @@ function updateCursor() {
     currentX += (targetX - currentX) * 0.14;
     currentY += (targetY - currentY) * 0.14;
 
-    root.style.setProperty(
-        "--mouse-x",
-        `${currentX}px`
-    );
-
-    root.style.setProperty(
-        "--mouse-y",
-        `${currentY}px`
-    );
+    root.style.setProperty("--mouse-x", `${currentX}px`);
+    root.style.setProperty("--mouse-y", `${currentY}px`);
 
     requestAnimationFrame(updateCursor);
 }
 
 
-updateCursor();
+requestAnimationFrame(updateCursor);
 
 
 /* ---------------------------------------------------------
