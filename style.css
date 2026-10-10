@@ -851,11 +851,19 @@ a:focus-visible {
     .hero {
         min-height: auto;
 
-        padding: 100px 0 75px;
+        padding: 70px 0 55px;
     }
 
     .hero h1 {
-        font-size: clamp(2.8rem, 15vw, 4.5rem);
+        font-size: clamp(2.1rem, 10vw, 3rem);
+    }
+
+    .hero-description {
+        font-size: 1.05rem;
+    }
+
+    .section-content h2 {
+        font-size: 1.5rem;
     }
 
     section {
@@ -897,9 +905,31 @@ a:focus-visible {
         gap: 4px;
     }
 
-    .math-layer,
+    /* smaller spotlight for small screens */
+
+    .math-layer {
+        mask-image:
+            radial-gradient(
+                circle 170px at var(--mouse-x) var(--mouse-y),
+                black 0%,
+                rgba(0, 0, 0, 0.85) 25%,
+                rgba(0, 0, 0, 0.35) 55%,
+                transparent 78%
+            );
+
+        -webkit-mask-image:
+            radial-gradient(
+                circle 170px at var(--mouse-x) var(--mouse-y),
+                black 0%,
+                rgba(0, 0, 0, 0.85) 25%,
+                rgba(0, 0, 0, 0.35) 55%,
+                transparent 78%
+            );
+    }
+
     .cursor-light {
-        display: none;
+        width: 320px;
+        height: 320px;
     }
 }
 
